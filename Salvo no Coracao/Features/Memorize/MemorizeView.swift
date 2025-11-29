@@ -22,7 +22,6 @@ struct MemorizeView: View {
                 .tint(.blue)
                 .accessibilityLabel("Modo de memorização")
 
-                // Níveis de máscara
                 if viewModel.mode == .hideWords {
                     HStack {
                         ForEach(MaskLevel.allCases) { level in

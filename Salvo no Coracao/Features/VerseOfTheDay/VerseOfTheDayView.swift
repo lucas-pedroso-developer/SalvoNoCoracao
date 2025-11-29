@@ -12,6 +12,7 @@ struct VerseOfTheDayView: View {
     @StateObject var viewModel: VerseOfTheDayViewModel
     @State private var showFavorites = false
     @State private var showMemorize = false
+    @State private var showCredits = false
     
     var body: some View {
         NavigationStack {
@@ -44,12 +45,24 @@ struct VerseOfTheDayView: View {
             .navigationTitle("Salvo no Coração")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        showCredits = true
+                    } label: {
+                        Image(systemName: "info.circle")
+                            .font(.body.weight(.semibold))
+                            .foregroundColor(.blue)
+                    }
+                    .accessibilityLabel("Sobre o app")
+                    .accessibilityHint("Abre informações e créditos bíblicos.")
+                }
+
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         showFavorites = true
                     } label: {
                         Image(systemName: "star.circle.fill")
-                            .font(.title3.weight(.semibold))
+                            .font(.system(size: 20, weight: .semibold))
                             .foregroundColor(.blue)
                     }
                     .accessibilityLabel("Abrir favoritos")
@@ -65,6 +78,9 @@ struct VerseOfTheDayView: View {
             }
             .sheet(isPresented: $showFavorites) {
                 FavoritesView(viewModel: FavoritesViewModel(verseOfTheDayViewModel: viewModel))
+            }
+            .sheet(isPresented: $showCredits) {
+                CreditsView()
             }
             .onAppear {
                 viewModel.load()
