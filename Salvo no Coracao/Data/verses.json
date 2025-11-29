@@ -1,0 +1,366 @@
+[
+  {
+    "id": "SALMO_23_1",
+    "book": "Salmo",
+    "chapter": 23,
+    "verse": 1,
+    "text": "O Senhor é o meu pastor; nada me faltará."
+  },
+  {
+    "id": "FILIPENSES_4_13",
+    "book": "Filipenses",
+    "chapter": 4,
+    "verse": 13,
+    "text": "Tudo posso naquele que me fortalece."
+  },
+  {
+    "id": "ROMANOS_8_28",
+    "book": "Romanos",
+    "chapter": 8,
+    "verse": 28,
+    "text": "Sabemos que todas as coisas cooperam para o bem daqueles que amam a Deus."
+  },
+  {
+    "id": "SALMO_46_1",
+    "book": "Salmo",
+    "chapter": 46,
+    "verse": 1,
+    "text": "Deus é o nosso refúgio e fortaleza, socorro bem presente nas tribulações."
+  },
+  {
+    "id": "ISAIAS_41_10",
+    "book": "Isaías",
+    "chapter": 41,
+    "verse": 10,
+    "text": "Não temas, porque eu sou contigo; não te assombres, porque eu sou o teu Deus."
+  },
+  {
+    "id": "JOSUE_1_9",
+    "book": "Josué",
+    "chapter": 1,
+    "verse": 9,
+    "text": "Sê forte e corajoso; não temas, nem te espantes, porque o Senhor teu Deus é contigo."
+  },
+  {
+    "id": "PROVERBIOS_3_5",
+    "book": "Provérbios",
+    "chapter": 3,
+    "verse": 5,
+    "text": "Confia no Senhor de todo o teu coração e não te estribes no teu próprio entendimento."
+  },
+  {
+    "id": "PROVERBIOS_3_6",
+    "book": "Provérbios",
+    "chapter": 3,
+    "verse": 6,
+    "text": "Reconhece-o em todos os teus caminhos, e ele endireitará as tuas veredas."
+  },
+  {
+    "id": "SALMO_37_5",
+    "book": "Salmo",
+    "chapter": 37,
+    "verse": 5,
+    "text": "Entrega o teu caminho ao Senhor; confia nele, e o mais ele fará."
+  },
+  {
+    "id": "MATEUS_6_33",
+    "book": "Mateus",
+    "chapter": 6,
+    "verse": 33,
+    "text": "Buscai, pois, em primeiro lugar, o seu reino e a sua justiça."
+  },
+  {
+    "id": "SALMO_121_1",
+    "book": "Salmo",
+    "chapter": 121,
+    "verse": 1,
+    "text": "Elevo os olhos para os montes; de onde me virá o socorro?"
+  },
+  {
+    "id": "SALMO_121_2",
+    "book": "Salmo",
+    "chapter": 121,
+    "verse": 2,
+    "text": "O meu socorro vem do Senhor, que fez os céus e a terra."
+  },
+  {
+    "id": "SALMO_34_18",
+    "book": "Salmo",
+    "chapter": 34,
+    "verse": 18,
+    "text": "Perto está o Senhor dos que têm o coração quebrantado."
+  },
+  {
+    "id": "SALMO_91_1",
+    "book": "Salmo",
+    "chapter": 91,
+    "verse": 1,
+    "text": "Aquele que habita no esconderijo do Altíssimo e descansa à sombra do Onipotente."
+  },
+  {
+    "id": "SALMO_91_7",
+    "book": "Salmo",
+    "chapter": 91,
+    "verse": 7,
+    "text": "Mil cairão ao teu lado e dez mil à tua direita, mas tu não serás atingido."
+  },
+  {
+    "id": "SALMO_121_7",
+    "book": "Salmo",
+    "chapter": 121,
+    "verse": 7,
+    "text": "O Senhor te guardará de todo mal; guardará a tua alma."
+  },
+  {
+    "id": "LAMENTACOES_3_22",
+    "book": "Lamentações",
+    "chapter": 3,
+    "verse": 22,
+    "text": "As misericórdias do Senhor são a causa de não sermos consumidos."
+  },
+  {
+    "id": "LAMENTACOES_3_23",
+    "book": "Lamentações",
+    "chapter": 3,
+    "verse": 23,
+    "text": "Renovam-se cada manhã; grande é a tua fidelidade."
+  },
+  {
+    "id": "FILIPENSES_4_6",
+    "book": "Filipenses",
+    "chapter": 4,
+    "verse": 6,
+    "text": "Não andeis ansiosos por coisa alguma; antes, sejam os vossos pedidos conhecidos diante de Deus."
+  },
+  {
+    "id": "FILIPENSES_4_7",
+    "book": "Filipenses",
+    "chapter": 4,
+    "verse": 7,
+    "text": "E a paz de Deus, que excede todo entendimento, guardará o vosso coração e a vossa mente."
+  },
+  {
+    "id": "1PEDRO_5_7",
+    "book": "1 Pedro",
+    "chapter": 5,
+    "verse": 7,
+    "text": "Lançando sobre ele toda a vossa ansiedade, porque ele tem cuidado de vós."
+  },
+  {
+    "id": "MATEUS_11_28",
+    "book": "Mateus",
+    "chapter": 11,
+    "verse": 28,
+    "text": "Vinde a mim todos os que estais cansados e sobrecarregados, e eu vos aliviarei."
+  },
+  {
+    "id": "JOAO_14_27",
+    "book": "João",
+    "chapter": 14,
+    "verse": 27,
+    "text": "Deixo-vos a paz; a minha paz vos dou. Não se turbe o vosso coração."
+  },
+  {
+    "id": "ISAIAS_40_31",
+    "book": "Isaías",
+    "chapter": 40,
+    "verse": 31,
+    "text": "Os que esperam no Senhor renovarão as suas forças."
+  },
+  {
+    "id": "SALMO_55_22",
+    "book": "Salmo",
+    "chapter": 55,
+    "verse": 22,
+    "text": "Lança o teu cuidado sobre o Senhor, e ele te susterá."
+  },
+  {
+    "id": "SALMO_18_2",
+    "book": "Salmo",
+    "chapter": 18,
+    "verse": 2,
+    "text": "O Senhor é a minha rocha, a minha fortaleza e o meu libertador."
+  },
+  {
+    "id": "2CORINTIOS_12_9",
+    "book": "2 Coríntios",
+    "chapter": 12,
+    "verse": 9,
+    "text": "A minha graça te basta, porque o poder se aperfeiçoa na fraqueza."
+  },
+  {
+    "id": "EFESIOS_6_10",
+    "book": "Efésios",
+    "chapter": 6,
+    "verse": 10,
+    "text": "Sede fortalecidos no Senhor e na força do seu poder."
+  },
+  {
+    "id": "MATEUS_7_7",
+    "book": "Mateus",
+    "chapter": 7,
+    "verse": 7,
+    "text": "Pedi, e dar-se-vos-á; buscai, e achareis."
+  },
+  {
+    "id": "ROMANOS_12_2",
+    "book": "Romanos",
+    "chapter": 12,
+    "verse": 2,
+    "text": "Transformai-vos pela renovação da vossa mente."
+  },
+  {
+    "id": "ISAIAS_43_2",
+    "book": "Isaías",
+    "chapter": 43,
+    "verse": 2,
+    "text": "Quando passares pelas águas estarei contigo."
+  },
+  {
+    "id": "SALMO_27_1",
+    "book": "Salmo",
+    "chapter": 27,
+    "verse": 1,
+    "text": "O Senhor é a minha luz e a minha salvação; de quem terei medo?"
+  },
+  {
+    "id": "JOAO_15_5",
+    "book": "João",
+    "chapter": 15,
+    "verse": 5,
+    "text": "Sem mim nada podeis fazer."
+  },
+  {
+    "id": "ROMANOS_8_37",
+    "book": "Romanos",
+    "chapter": 8,
+    "verse": 37,
+    "text": "Em todas estas coisas somos mais que vencedores."
+  },
+  {
+    "id": "SALMO_103_2",
+    "book": "Salmo",
+    "chapter": 103,
+    "verse": 2,
+    "text": "Bendize, ó minha alma, ao Senhor, e não te esqueças de nenhum de seus benefícios."
+  },
+  {
+    "id": "HEBREUS_11_1",
+    "book": "Hebreus",
+    "chapter": 11,
+    "verse": 1,
+    "text": "A fé é a certeza de coisas que se esperam."
+  },
+  {
+    "id": "TIAGO_1_5",
+    "book": "Tiago",
+    "chapter": 1,
+    "verse": 5,
+    "text": "Se algum de vós necessita de sabedoria, peça-a a Deus."
+  },
+  {
+    "id": "COLOSSENSES_3_23",
+    "book": "Colossenses",
+    "chapter": 3,
+    "verse": 23,
+    "text": "Tudo quanto fizerdes, fazei-o de todo o coração, como para o Senhor."
+  },
+  {
+    "id": "SALMO_56_3",
+    "book": "Salmo",
+    "chapter": 56,
+    "verse": 3,
+    "text": "Quando eu estiver com medo, confiarei em ti."
+  },
+  {
+    "id": "SALMO_119_105",
+    "book": "Salmo",
+    "chapter": 119,
+    "verse": 105,
+    "text": "Lâmpada para os meus pés é a tua palavra, e luz para o meu caminho."
+  },
+  {
+    "id": "PROVERBIOS_4_23",
+    "book": "Provérbios",
+    "chapter": 4,
+    "verse": 23,
+    "text": "Sobre tudo o que se deve guardar, guarda o coração."
+  },
+  {
+    "id": "SALMO_145_18",
+    "book": "Salmo",
+    "chapter": 145,
+    "verse": 18,
+    "text": "Perto está o Senhor de todos os que o invocam."
+  },
+  {
+    "id": "JOAO_16_33",
+    "book": "João",
+    "chapter": 16,
+    "verse": 33,
+    "text": "No mundo tereis aflições; mas tende bom ânimo, eu venci o mundo."
+  },
+  {
+    "id": "1JOAO_4_18",
+    "book": "1 João",
+    "chapter": 4,
+    "verse": 18,
+    "text": "No amor não há medo; o perfeito amor lança fora o medo."
+  },
+  {
+    "id": "ROMANOS_10_17",
+    "book": "Romanos",
+    "chapter": 10,
+    "verse": 17,
+    "text": "A fé vem pelo ouvir, e o ouvir da palavra de Cristo."
+  },
+  {
+    "id": "SALMO_73_26",
+    "book": "Salmo",
+    "chapter": 73,
+    "verse": 26,
+    "text": "A minha carne e o meu coração podem falhar, mas Deus é a fortaleza do meu coração."
+  },
+  {
+    "id": "ISAIAS_26_3",
+    "book": "Isaías",
+    "chapter": 26,
+    "verse": 3,
+    "text": "Tu conservarás em perfeita paz aquele cujo propósito é firme."
+  },
+  {
+    "id": "SALMO_62_5",
+    "book": "Salmo",
+    "chapter": 62,
+    "verse": 5,
+    "text": "Somente em Deus, ó minha alma, espera silenciosa."
+  },
+  {
+    "id": "JO_19_25",
+    "book": "Jó",
+    "chapter": 19,
+    "verse": 25,
+    "text": "Eu sei que o meu Redentor vive."
+  },
+  {
+    "id": "MATEUS_5_14",
+    "book": "Mateus",
+    "chapter": 5,
+    "verse": 14,
+    "text": "Vós sois a luz do mundo."
+  },
+  {
+    "id": "EFESIOS_3_20",
+    "book": "Efésios",
+    "chapter": 3,
+    "verse": 20,
+    "text": "Aquele que é poderoso para fazer infinitamente mais do que tudo o que pedimos ou pensamos."
+  },
+  {
+    "id": "SALMO_20_7",
+    "book": "Salmo",
+    "chapter": 20,
+    "verse": 7,
+    "text": "Uns confiam em carros e outros em cavalos, mas nós faremos menção do nome do Senhor nosso Deus."
+  }
+]

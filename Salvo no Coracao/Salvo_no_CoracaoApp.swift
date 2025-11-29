@@ -10,12 +10,20 @@ import CoreData
 
 @main
 struct Salvo_no_CoracaoApp: App {
-    let persistenceController = PersistenceController.shared
-
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+    private let repository = LocalJSONVerseRepository()
+    private let favoritesStore = UserDefaultsFavoritesStore()
+    
+    init() {
+            UISegmentedControl.applyBlueTint()
         }
-    }
+        
+        var body: some Scene {
+            WindowGroup {
+                let vm = VerseOfTheDayViewModel(
+                    repository: repository,
+                    favoritesStore: favoritesStore
+                )
+                VerseOfTheDayView(viewModel: vm)
+            }
+        }
 }
