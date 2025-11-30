@@ -6,95 +6,81 @@
 //
 
 import SwiftUI
-import Combine
 
 struct VerseOfTheDayView: View {
     @StateObject var viewModel: VerseOfTheDayViewModel
-    @State private var showFavorites = false
-    @State private var showMemorize = false
-    @State private var showCredits = false
+    @EnvironmentObject var coordinator: AppCoordinator
     
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: 24) {
-                    subtitleView()
-                        .padding(.top, 24)
-
-                    if let verse = viewModel.currentVerse {
-                        ZStack(alignment: .topLeading) {
-                            RoundedRectangle(cornerRadius: 28)
-                                .fill(.ultraThinMaterial)
-                                .shadow(
-                                    color: .black.opacity(0.08),
-                                    radius: 16,
-                                    x: 0,
-                                    y: 8
-                                )
-
-                            card(verse: verse)
-                        }
-                        .padding(.horizontal, 20)
-                        .padding(.top, 4)
-                    }
-
-                    refreshButton()
-                    Spacer().frame(height: 32)
-                }
-            }
-            .navigationTitle("Salvo no Coração")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        showCredits = true
-                    } label: {
-                        Image(systemName: "info.circle")
-                            .font(.body.weight(.semibold))
-                            .foregroundColor(.blue)
-                    }
-                    .accessibilityLabel("Sobre o app")
-                    .accessibilityHint("Abre informações e créditos bíblicos.")
-                }
-
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showFavorites = true
-                    } label: {
-                        Image(systemName: "star.circle.fill")
-                            .font(.system(size: 20, weight: .semibold))
-                            .foregroundColor(.blue)
-                    }
-                    .accessibilityLabel("Abrir favoritos")
-                }
-            }
-            .toolbarBackground(.white, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
-            .toolbarColorScheme(.light, for: .navigationBar)
-            .sheet(isPresented: $showMemorize) {
+        ScrollView {
+            VStack(spacing: 24) {
+                subtitleView()
+                    .padding(.top, 24)
+                
                 if let verse = viewModel.currentVerse {
-                    MemorizeView(viewModel: MemorizeViewModel(verse: verse))
+                    ZStack(alignment: .topLeading) {
+                        RoundedRectangle(cornerRadius: 28)
+                            .fill(.ultraThinMaterial)
+                            .shadow(
+                                color: .black.opacity(0.08),
+                                radius: 16,
+                                x: 0,
+                                y: 8
+                            )
+                        
+                        card(verse: verse)
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.top, 4)
                 }
-            }
-            .sheet(isPresented: $showFavorites) {
-                FavoritesView(viewModel: FavoritesViewModel(verseOfTheDayViewModel: viewModel))
-            }
-            .sheet(isPresented: $showCredits) {
-                CreditsView()
-            }
-            .onAppear {
-                viewModel.load()
+                
+                refreshButton()
+                Spacer().frame(height: 32)
             }
         }
+        .navigationTitle("Salvo no Coração")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    coordinator.showCredits()
+                } label: {
+                    Image(systemName: "info.circle")
+                        .font(.body.weight(.semibold))
+                        .foregroundColor(.blue)
+                }
+                .accessibilityLabel("Sobre o app")
+                .accessibilityHint("Abre informações e créditos bíblicos.")
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    coordinator.showFavorites()
+                } label: {
+                    Image(systemName: "star.circle.fill")
+                        .font(.system(size: 20, weight: .semibold))
+                        .foregroundColor(.blue)
+                }
+                .accessibilityLabel("Abrir favoritos")
+            }
+        }
+        .toolbarBackground(.white, for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
+        .toolbarColorScheme(.light, for: .navigationBar)
+        .onAppear {
+            viewModel.load()
+        }
     }
-
+    
+    // MARK: - Subviews
+    
     fileprivate func subtitleView() -> some View {
         Text("VERSÍCULO DO DIA")
             .font(.footnote.weight(.semibold))
             .foregroundColor(.gray.opacity(0.8))
             .tracking(1)
     }
-
+    
     fileprivate func refreshButton() -> some View {
         Button {
             viewModel.refreshRandom()
@@ -102,7 +88,7 @@ struct VerseOfTheDayView: View {
             HStack(spacing: 6) {
                 Image(systemName: "arrow.clockwise")
                     .font(.body.weight(.medium))
-
+                
                 Text("Trocar versículo")
                     .font(.body)
             }
@@ -112,20 +98,20 @@ struct VerseOfTheDayView: View {
         .accessibilityLabel("Trocar versículo do dia")
         .accessibilityHint("Escolhe outro versículo aleatório para hoje.")
     }
-
+    
     fileprivate func card(verse: Verse) -> some View {
         VStack(spacing: 20) {
             icon()
             verseContainer(verse: verse)
-            buttons()
+            buttons(verse: verse)
         }
         .padding(24)
     }
-
-    fileprivate func buttons() -> some View {
+    
+    fileprivate func buttons(verse: Verse) -> some View {
         HStack(spacing: 16) {
             Button(action: {
-                showMemorize = true
+                coordinator.showMemorize(for: verse)
             }) {
                 Text("Memorizar")
                     .frame(maxWidth: .infinity)
@@ -141,7 +127,7 @@ struct VerseOfTheDayView: View {
             }
             .accessibilityLabel("Memorizar versículo do dia")
             .accessibilityHint("Abre a tela para treinar a memorização deste versículo.")
-
+            
             Button(action: {
                 viewModel.toggleFavorite()
             }) {
@@ -187,7 +173,7 @@ struct VerseOfTheDayView: View {
             Text(verse.reference)
                 .font(.title2.weight(.bold))
                 .foregroundColor(.primary)
-
+            
             Text(verse.text)
                 .font(.system(.title3, design: .serif))
                 .foregroundColor(.primary)
@@ -200,11 +186,16 @@ struct VerseOfTheDayView: View {
 #Preview {
     let repository = LocalJSONVerseRepository()
     let favoritesStore = UserDefaultsFavoritesStore()
-
     let viewModel = VerseOfTheDayViewModel(
         repository: repository,
         favoritesStore: favoritesStore
     )
     
-    return VerseOfTheDayView(viewModel: viewModel).preferredColorScheme(.dark)
+    let coordinator = AppCoordinator()
+    
+    return NavigationStack {
+        VerseOfTheDayView(viewModel: viewModel)
+            .environmentObject(coordinator)
+    }
+    .preferredColorScheme(.dark)
 }
