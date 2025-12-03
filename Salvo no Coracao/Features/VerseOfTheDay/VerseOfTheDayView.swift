@@ -64,9 +64,6 @@ struct VerseOfTheDayView: View {
                 .accessibilityLabel("Abrir favoritos")
             }
         }
-        .toolbarBackground(.white, for: .navigationBar)
-        .toolbarBackground(.visible, for: .navigationBar)
-        .toolbarColorScheme(.light, for: .navigationBar)
         .onAppear {
             viewModel.load()
         }

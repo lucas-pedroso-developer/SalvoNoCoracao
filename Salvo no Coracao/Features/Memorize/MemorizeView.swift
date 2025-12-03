@@ -12,6 +12,7 @@ import SwiftUI
 
 struct MemorizeView: View {
     @StateObject var viewModel: MemorizeViewModel
+    @EnvironmentObject var coordinator: AppCoordinator
 
     var body: some View {
         VStack(spacing: 16) {
@@ -66,9 +67,21 @@ struct MemorizeView: View {
 
             Spacer()
         }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    coordinator.dismiss()
+                }) {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 18, weight: .medium))
+                }
+            }
+        }
         .padding()
         .navigationTitle("Memorizar")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
+
     }
 }
 

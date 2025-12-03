@@ -47,4 +47,10 @@ final class AppCoordinator: ObservableObject {
         path.removeAll()
         memorizingVerse = nil
     }
+
+    func dismiss() {
+        if !path.isEmpty {
+            path.removeLast()
+        }
+    }
 }

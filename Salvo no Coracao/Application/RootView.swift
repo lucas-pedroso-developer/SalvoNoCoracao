@@ -37,12 +37,14 @@ struct RootView: View {
                                 verseOfTheDayViewModel: verseViewModel
                             )
                         )
+                        .environmentObject(coordinator)
                         
                     case .memorize:
                         if let verse = coordinator.memorizingVerse {
                             MemorizeView(
                                 viewModel: MemorizeViewModel(verse: verse)
                             )
+                            .environmentObject(coordinator)
                         } else {
                             Text("Nenhum versículo selecionado.")
                                 .foregroundColor(.red)
@@ -50,6 +52,7 @@ struct RootView: View {
                         
                     case .credits:
                         CreditsView()
+                            .environmentObject(coordinator)
                     }
                 }
         }

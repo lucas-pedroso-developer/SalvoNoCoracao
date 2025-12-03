@@ -11,6 +11,7 @@ import Combine
 struct FavoritesView: View {
     @ObservedObject var viewModel: FavoritesViewModel
     @State private var selectedVerse: Verse?
+    @EnvironmentObject var coordinator: AppCoordinator
 
     var body: some View {
         ZStack {
@@ -89,6 +90,17 @@ struct FavoritesView: View {
                 MemorizeView(viewModel: MemorizeViewModel(verse: verse))
             }
         }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    coordinator.dismiss()
+                }) {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 18, weight: .medium))
+                }
+            }
+        }
+        .navigationBarBackButtonHidden()
     }
 
     fileprivate func favoriteCard(_ verse: Verse) -> some View {
