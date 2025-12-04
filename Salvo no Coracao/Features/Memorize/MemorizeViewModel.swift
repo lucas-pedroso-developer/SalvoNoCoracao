@@ -12,6 +12,7 @@ import Combine
 enum MemorizeMode {
     case view
     case hideWords
+    case firstLetters
 }
 
 @MainActor
@@ -20,9 +21,16 @@ final class MemorizeViewModel: ObservableObject {
 
     @Published var mode: MemorizeMode = .view
     @Published var maskLevel: MaskLevel = .zero
+    @Published var isMemorized: Bool
 
-    init(verse: Verse) {
+    private let memorizedStore: MemorizedVersesStore
+    private static let memorizedKey = "memorizedVerseIds"
+
+    init(verse: Verse, memorizedStore: MemorizedVersesStore) {
         self.verse = verse
+//        self.isMemorized = Self.loadIsMemorized(for: verse.id)
+        self.memorizedStore = memorizedStore
+        self.isMemorized = memorizedStore.isMemorized(id: verse.id)
     }
 
     var fullText: String {
@@ -35,6 +43,10 @@ final class MemorizeViewModel: ObservableObject {
         }
 
         return Self.mask(text: verse.text, level: maskLevel)
+    }
+
+    var firstLettersText: String {
+        Self.firstLetters(from: verse.text)
     }
 
     static func mask(text: String, level: MaskLevel) -> String {
@@ -67,5 +79,39 @@ final class MemorizeViewModel: ObservableObject {
         }
 
         return maskedWords.joined(separator: " ")
+    }
+    
+    static func firstLetters(from text: String) -> String {
+        text
+            .split(separator: " ")
+            .map { word -> String in
+                let s = String(word)
+                guard let first = s.first else { return "" }
+                let restCount = max(s.count - 1, 0)
+                let underscores = String(repeating: "_", count: restCount)
+                return String(first) + underscores
+            }
+            .joined(separator: " ")
+    }
+
+    func toggleMemorized() {
+        isMemorized.toggle()
+//        Self.save(isMemorized: isMemorized, for: verse.id)
+        memorizedStore.setMemorized(isMemorized, for: verse.id)
+    }
+    
+    private static func loadIsMemorized(for id: String) -> Bool {
+        let ids = Set(UserDefaults.standard.stringArray(forKey: memorizedKey) ?? [])
+        return ids.contains(id)
+    }
+    
+    private static func save(isMemorized: Bool, for id: String) {
+        var ids = Set(UserDefaults.standard.stringArray(forKey: memorizedKey) ?? [])
+        if isMemorized {
+            ids.insert(id)
+        } else {
+            ids.remove(id)
+        }
+        UserDefaults.standard.set(Array(ids), forKey: memorizedKey)
     }
 }

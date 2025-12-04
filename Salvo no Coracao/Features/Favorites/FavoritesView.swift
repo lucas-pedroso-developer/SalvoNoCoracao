@@ -87,7 +87,7 @@ struct FavoritesView: View {
             }
         )) {
             if let verse = selectedVerse {
-                MemorizeView(viewModel: MemorizeViewModel(verse: verse))
+                MemorizeView(viewModel: MemorizeViewModel(verse: verse, memorizedStore: viewModel.memorizedStore))
             }
         }
         .toolbar {

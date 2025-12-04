@@ -9,6 +9,7 @@ import SwiftUI
 
 struct VerseOfTheDayView: View {
     @StateObject var viewModel: VerseOfTheDayViewModel
+    let memorizedStore: MemorizedVersesStore
     @EnvironmentObject var coordinator: AppCoordinator
     
     var body: some View {
@@ -32,6 +33,8 @@ struct VerseOfTheDayView: View {
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 4)
+                    
+                    memorizedBadge(for: verse)
                 }
                 
                 refreshButton()
@@ -178,6 +181,21 @@ struct VerseOfTheDayView: View {
                 .padding(.horizontal)
         }
     }
+
+    private func memorizedBadge(for verse: Verse) -> some View {
+        let isMemorized = memorizedStore.isMemorized(id: verse.id)
+
+        return HStack(spacing: 6) {
+            Image(systemName: isMemorized ? "checkmark.seal.fill" : "seal")
+                .font(.subheadline)
+                .foregroundColor(isMemorized ? .green : .secondary)
+
+            Text(isMemorized ? "Versículo memorizado" : "Ainda não memorizado")
+                .font(.footnote.weight(.medium))
+                .foregroundColor(isMemorized ? .green : .secondary)
+        }
+        .padding(.top, 8)
+    }
 }
 
 #Preview {
@@ -191,7 +209,7 @@ struct VerseOfTheDayView: View {
     let coordinator = AppCoordinator()
     
     return NavigationStack {
-        VerseOfTheDayView(viewModel: viewModel)
+        VerseOfTheDayView(viewModel: viewModel, memorizedStore: UserDefaultsMemorizedVersesStore())
             .environmentObject(coordinator)
     }
     .preferredColorScheme(.dark)

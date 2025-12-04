@@ -12,11 +12,13 @@ import Combine
 @MainActor
 final class FavoritesViewModel: ObservableObject {
     @Published private(set) var favorites: [Verse] = []
+    let memorizedStore: MemorizedVersesStore
 
     private let verseOfTheDayViewModel: VerseOfTheDayViewModel
 
-    init(verseOfTheDayViewModel: VerseOfTheDayViewModel) {
+    init(verseOfTheDayViewModel: VerseOfTheDayViewModel, memorizedStore: MemorizedVersesStore) {
         self.verseOfTheDayViewModel = verseOfTheDayViewModel
+        self.memorizedStore = memorizedStore
         reload()
     }
 

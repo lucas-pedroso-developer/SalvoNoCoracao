@@ -10,10 +10,13 @@ import SwiftUI
 struct RootView: View {
     @EnvironmentObject var coordinator: AppCoordinator
     @StateObject private var verseViewModel: VerseOfTheDayViewModel
+
+    private let memorizedStore: MemorizedVersesStore
     
     init() {
         let repository = LocalJSONVerseRepository()
         let favoritesStore = UserDefaultsFavoritesStore()
+        let memorizedStore = UserDefaultsMemorizedVersesStore()
         
         _verseViewModel = StateObject(
             wrappedValue: VerseOfTheDayViewModel(
@@ -21,20 +24,25 @@ struct RootView: View {
                 favoritesStore: favoritesStore
             )
         )
+        self.memorizedStore = memorizedStore
     }
     
     var body: some View {
         NavigationStack(path: $coordinator.path) {
-            VerseOfTheDayView(viewModel: verseViewModel)
+            VerseOfTheDayView(viewModel: verseViewModel, memorizedStore: memorizedStore)
                 .navigationDestination(for: AppRoute.self) { route in
                     switch route {
                     case .home:
-                        VerseOfTheDayView(viewModel: verseViewModel)
+                        VerseOfTheDayView(
+                            viewModel: verseViewModel,
+                            memorizedStore: memorizedStore
+                        )
                         
                     case .favorites:
                         FavoritesView(
                             viewModel: FavoritesViewModel(
-                                verseOfTheDayViewModel: verseViewModel
+                                verseOfTheDayViewModel: verseViewModel,
+                                memorizedStore: memorizedStore
                             )
                         )
                         .environmentObject(coordinator)
@@ -42,7 +50,8 @@ struct RootView: View {
                     case .memorize:
                         if let verse = coordinator.memorizingVerse {
                             MemorizeView(
-                                viewModel: MemorizeViewModel(verse: verse)
+                                viewModel: MemorizeViewModel(verse: verse,
+                                                             memorizedStore: memorizedStore)
                             )
                             .environmentObject(coordinator)
                         } else {

@@ -8,8 +8,6 @@
 import SwiftUI
 import Combine
 
-import SwiftUI
-
 struct MemorizeView: View {
     @StateObject var viewModel: MemorizeViewModel
     @EnvironmentObject var coordinator: AppCoordinator
@@ -19,6 +17,7 @@ struct MemorizeView: View {
             Picker("Modo de visualização", selection: $viewModel.mode) {
                 Text("Ver").tag(MemorizeMode.view)
                 Text("Ocultar").tag(MemorizeMode.hideWords)
+                Text("1ª letras").tag(MemorizeMode.firstLetters)
             }
             .pickerStyle(.segmented)
             .tint(.blue)
@@ -57,6 +56,8 @@ struct MemorizeView: View {
                         Text(viewModel.fullText)
                     case .hideWords:
                         Text(viewModel.maskedText)
+                    case .firstLetters:
+                        Text(viewModel.firstLettersText)
                     }
                 }
                 .font(.body)
@@ -64,6 +65,27 @@ struct MemorizeView: View {
                 .padding(.horizontal)
                 .padding(.top, 16)
             }
+
+            if viewModel.mode != .view {
+                Button("Revelar versículo") {
+                    viewModel.mode = .view
+                    viewModel.maskLevel = .zero
+                }
+                .font(.footnote)
+                .padding(.top, 8)
+            }
+
+            Button {
+                viewModel.toggleMemorized()
+            } label: {
+                Text(viewModel.isMemorized ? "Marcar como NÃO memorizado" : "Marcar como memorizado")
+                    .font(.subheadline.weight(.semibold))
+                    .frame(maxWidth: .infinity, minHeight: 44)
+                    .background(viewModel.isMemorized ? Color.green.opacity(0.12) : Color.blue.opacity(0.12))
+                    .foregroundColor(viewModel.isMemorized ? .green : .blue)
+                    .cornerRadius(12)
+            }
+            .padding(.top, 16)
 
             Spacer()
         }
@@ -94,7 +116,9 @@ struct MemorizeView: View {
         text: "O Senhor é o meu pastor; nada me faltará."
     )
 
+    let memorizedStore = UserDefaultsMemorizedVersesStore()
+
     NavigationStack {
-        MemorizeView(viewModel: MemorizeViewModel(verse: mockVerse))
+        MemorizeView(viewModel: MemorizeViewModel(verse: mockVerse, memorizedStore: memorizedStore))
     }
 }
