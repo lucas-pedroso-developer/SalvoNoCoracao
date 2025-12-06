@@ -7,10 +7,9 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct ThemesView: View {
     @EnvironmentObject var coordinator: AppCoordinator
+    @State private var selectedTheme: VerseTheme?
 
     var body: some View {
         ZStack {
@@ -25,9 +24,7 @@ struct ThemesView: View {
 
                     ForEach(VerseTheme.allCases) { theme in
                         Button {
-                            // depois a gente liga numa ThemeDetailView
-                            // por enquanto só deixa o tap pronto
-                            // coordinator.go(to: .themeDetail(theme))
+                            selectedTheme = theme
                         } label: {
                             themeCard(theme)
                         }
@@ -51,6 +48,11 @@ struct ThemesView: View {
             }
         }
         .navigationBarBackButtonHidden()
+        .sheet(item: $selectedTheme) { theme in
+            NavigationStack {
+                ThemeDetailView(theme: theme)
+            }
+        }
     }
 
     private func themeCard(_ theme: VerseTheme) -> some View {
@@ -61,9 +63,6 @@ struct ThemesView: View {
             Text(theme.description)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-
-            // linha fina opcional
-            // Divider().padding(.top, 4)
         }
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
