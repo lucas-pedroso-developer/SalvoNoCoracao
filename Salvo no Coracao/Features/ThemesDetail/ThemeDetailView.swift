@@ -10,7 +10,6 @@ import SwiftUI
 struct ThemeDetailView: View {
     let theme: VerseTheme
 
-    // Versículos estáticos por tema (por enquanto)
     private var verses: [ThemeVerse] {
         switch theme {
         case .ansiedade:
@@ -100,6 +99,7 @@ struct ThemeDetailView: View {
     }
 
     @State private var selectedVerse: ThemeVerse?
+    @EnvironmentObject var coordinator: AppCoordinator
 
     var body: some View {
         ZStack {
@@ -141,7 +141,18 @@ struct ThemeDetailView: View {
                 .padding(.bottom, 24)
             }
         }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    coordinator.dismiss()
+                }) {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 18, weight: .medium))
+                }
+            }
+        }
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
     }
 }
 
