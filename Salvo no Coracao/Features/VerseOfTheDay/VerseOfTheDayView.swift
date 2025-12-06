@@ -207,6 +207,12 @@ struct VerseOfTheDayView: View {
             }
 
             Button {
+                coordinator.go(to: .themes)
+            } label: {
+                Label("Versículos por tema", systemImage: "list.bullet")
+            }
+
+            Button {
                 coordinator.showCredits()
             } label: {
                 Label("Sobre & créditos", systemImage: "info.circle")
@@ -215,7 +221,7 @@ struct VerseOfTheDayView: View {
         } label: {
             Image(systemName: "line.3.horizontal")
                 .font(.headline)
-                .padding(4) // só pra melhorar a área de toque
+                .padding(4)
         }
     }
 

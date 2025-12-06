@@ -16,7 +16,7 @@ final class AppCoordinator: ObservableObject {
         switch route {
         case .home:
             popToRoot()
-        case .favorites, .memorize, .credits:
+        case .favorites, .memorize, .credits, .themes:
             path.append(route)
         }
     }

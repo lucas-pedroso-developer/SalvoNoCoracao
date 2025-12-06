@@ -62,6 +62,10 @@ struct RootView: View {
                     case .credits:
                         CreditsView()
                             .environmentObject(coordinator)
+
+                    case .themes:
+                           ThemesView()
+                               .environmentObject(coordinator)
                     }
                 }
         }
