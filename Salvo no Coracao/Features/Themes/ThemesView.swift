@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct ThemesView: View {
     @EnvironmentObject var coordinator: AppCoordinator
 
@@ -15,27 +17,28 @@ struct ThemesView: View {
             Color(uiColor: .systemGray6)
                 .ignoresSafeArea()
 
-            VStack(alignment: .leading, spacing: 16) {
-                Text("Versículos por tema")
-                    .font(.largeTitle.weight(.bold))
-                    .padding(.top, 24)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("Versículos por tema")
+                        .font(.largeTitle.weight(.bold))
+                        .padding(.top, 24)
 
-                List {
                     ForEach(VerseTheme.allCases) { theme in
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(theme.title)
-                                .font(.headline)
-
-                            Text(theme.description)
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
+                        Button {
+                            // depois a gente liga numa ThemeDetailView
+                            // por enquanto só deixa o tap pronto
+                            // coordinator.go(to: .themeDetail(theme))
+                        } label: {
+                            themeCard(theme)
                         }
-                        .padding(.vertical, 4)
+                        .buttonStyle(.plain)
                     }
+
+                    Spacer(minLength: 16)
                 }
-                .listStyle(.insetGrouped)
+                .padding(.horizontal, 20)
+                .padding(.bottom, 24)
             }
-            .padding(.horizontal, 20)
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -48,6 +51,25 @@ struct ThemesView: View {
             }
         }
         .navigationBarBackButtonHidden()
+    }
+
+    private func themeCard(_ theme: VerseTheme) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(theme.title)
+                .font(.headline)
+
+            Text(theme.description)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+
+            // linha fina opcional
+            // Divider().padding(.top, 4)
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color.white)
+        .cornerRadius(18)
+        .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 4)
     }
 }
 
