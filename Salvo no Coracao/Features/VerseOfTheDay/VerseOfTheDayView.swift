@@ -44,27 +44,18 @@ struct VerseOfTheDayView: View {
         .navigationTitle("Salvo no Coração")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    coordinator.showCredits()
-                } label: {
-                    Image(systemName: "info.circle")
-                        .font(.body.weight(.semibold))
-                        .foregroundColor(.blue)
-                }
-                .accessibilityLabel("Sobre o app")
-                .accessibilityHint("Abre informações e créditos bíblicos.")
+            ToolbarItem(placement: .navigationBarLeading) {
+                mainMenu
             }
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    coordinator.showFavorites()
-                } label: {
-                    Image(systemName: "star.circle.fill")
-                        .font(.system(size: 20, weight: .semibold))
-                        .foregroundColor(.blue)
+
+            ToolbarItem(placement: .navigationBarTrailing) {
+                if let verse = viewModel.currentVerse {
+                    ShareLink(
+                        item: shareText(for: verse)
+                    ) {
+                        Image(systemName: "square.and.arrow.up")
+                    }
                 }
-                .accessibilityLabel("Abrir favoritos")
             }
         }
         .onAppear {
@@ -196,6 +187,38 @@ struct VerseOfTheDayView: View {
         }
         .padding(.top, 8)
     }
+
+    private func shareText(for verse: Verse) -> String {
+        """
+        \(verse.reference)
+
+        \(verse.text)
+
+        — Enviado pelo app Salvo no Coração
+        """
+    }
+
+    private var mainMenu: some View {
+        Menu {
+            Button {
+                coordinator.showFavorites()
+            } label: {
+                Label("Favoritos", systemImage: "star.fill")
+            }
+
+            Button {
+                coordinator.showCredits()
+            } label: {
+                Label("Sobre & créditos", systemImage: "info.circle")
+            }
+
+        } label: {
+            Image(systemName: "line.3.horizontal")
+                .font(.headline)
+                .padding(4) // só pra melhorar a área de toque
+        }
+    }
+
 }
 
 #Preview {
