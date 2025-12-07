@@ -14,7 +14,7 @@ import StoreKit
 final class VerseOfTheDayViewModel: ObservableObject {
     @Published private(set) var currentVerse: Verse?
     @Published private(set) var isFavorite: Bool = false
-    @Published private(set) var state: VerseOfTheDayState = .idle   // 👈 NOVO
+    @Published private(set) var state: VerseOfTheDayState = .idle
 
     private let repository: VerseRepository
     private let favoritesStore: FavoritesStore
@@ -25,6 +25,11 @@ final class VerseOfTheDayViewModel: ObservableObject {
     init(repository: VerseRepository, favoritesStore: FavoritesStore) {
         self.repository = repository
         self.favoritesStore = favoritesStore
+    }
+    
+    private enum StorageKeys {
+        static let lastVerseID = "verseOfTheDay.lastVerseID"
+        static let lastVerseDate = "verseOfTheDay.lastVerseDate"
     }
 
     func load() {
@@ -52,12 +57,22 @@ final class VerseOfTheDayViewModel: ObservableObject {
             return
         }
 
+        if let stored = loadStoredVerseForToday() {
+            currentVerse = stored
+            isFavorite = favoriteIDs.contains(stored.id)
+            state = .loaded(stored)
+            return
+        }
+
         let dayOfYear = Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 1
         let index = (dayOfYear - 1) % allVerses.count
         let verse = allVerses[index]
 
         currentVerse = verse
         isFavorite = favoriteIDs.contains(verse.id)
+
+        storeVerseForToday(verse)
+
         state = .loaded(verse)
     }
 
@@ -72,7 +87,8 @@ final class VerseOfTheDayViewModel: ObservableObject {
         guard allVerses.count > 1 else {
             currentVerse = allVerses.first
             guard let current = currentVerse else { return }
-            isFavorite = currentVerse.map { favoriteIDs.contains($0.id) } ?? false
+            isFavorite = favoriteIDs.contains(current.id)
+            storeVerseForToday(current)
             state = .loaded(current)
             return
         }
@@ -84,9 +100,13 @@ final class VerseOfTheDayViewModel: ObservableObject {
 
         currentVerse = newVerse
         isFavorite = favoriteIDs.contains(newVerse.id)
-        guard let current = currentVerse else { return }
-        state = .loaded(current)
+
+        if let current = currentVerse {
+            storeVerseForToday(current)
+            state = .loaded(current)
+        }
     }
+
 
     func toggleFavorite() {
         guard let verse = currentVerse else { return }
@@ -127,4 +147,33 @@ final class VerseOfTheDayViewModel: ObservableObject {
             }
         }
     }
+    
+    // MARK: - Persistência do versículo do dia
+
+    private func loadStoredVerseForToday() -> Verse? {
+        let defaults = UserDefaults.standard
+
+        guard
+            let lastID = defaults.string(forKey: StorageKeys.lastVerseID),
+            let lastDate = defaults.object(forKey: StorageKeys.lastVerseDate) as? Date
+        else {
+            return nil
+        }
+
+        let calendar = Calendar.current
+        // Só considera se for hoje
+        guard calendar.isDateInToday(lastDate) else {
+            return nil
+        }
+
+        // Procura o versículo no array carregado
+        return allVerses.first(where: { $0.id == lastID })
+    }
+
+    private func storeVerseForToday(_ verse: Verse) {
+        let defaults = UserDefaults.standard
+        defaults.set(verse.id, forKey: StorageKeys.lastVerseID)
+        defaults.set(Date(), forKey: StorageKeys.lastVerseDate)
+    }
+
 }
