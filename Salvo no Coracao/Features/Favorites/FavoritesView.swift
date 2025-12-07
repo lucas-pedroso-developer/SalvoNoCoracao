@@ -158,10 +158,7 @@ struct FavoritesView: View {
                 .lineLimit(3)
                 .multilineTextAlignment(.leading)
         }
-        .padding(12)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.white)
-        .cornerRadius(14)
+        .verseListCardStyle()
         .animation(
             .spring(response: 0.3, dampingFraction: 0.8),
             value: isMemorized

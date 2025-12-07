@@ -10,6 +10,8 @@ import SwiftUI
 struct RootView: View {
     @EnvironmentObject var coordinator: AppCoordinator
     @StateObject private var verseViewModel: VerseOfTheDayViewModel
+    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
+    @State private var showOnboarding = false
 
     private let memorizedStore: MemorizedVersesStore
     
@@ -76,6 +78,17 @@ struct RootView: View {
                         )
                     }
                 }
+        }
+        .onAppear {
+            if !hasSeenOnboarding {
+                showOnboarding = true
+            }
+        }
+        .fullScreenCover(isPresented: $showOnboarding) {
+            OnboardingView {
+                hasSeenOnboarding = true
+                showOnboarding = false
+            }
         }
     }
 }

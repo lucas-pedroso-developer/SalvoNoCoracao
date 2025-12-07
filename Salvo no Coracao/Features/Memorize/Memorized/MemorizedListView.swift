@@ -155,10 +155,6 @@ struct MemorizedListView: View {
             }
             .padding(.top, 4)
         }
-        .padding(12)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.white)
-        .cornerRadius(14)
-        .shadow(color: .black.opacity(0.04), radius: 4, x: 0, y: 2)
+        .verseListCardStyle()
     }
 }
