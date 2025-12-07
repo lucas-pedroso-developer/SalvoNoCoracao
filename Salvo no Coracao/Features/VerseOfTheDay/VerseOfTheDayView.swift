@@ -11,7 +11,13 @@ struct VerseOfTheDayView: View {
     @StateObject var viewModel: VerseOfTheDayViewModel
     let memorizedStore: MemorizedVersesStore
     @EnvironmentObject var coordinator: AppCoordinator
-    
+
+    var verseFontSizeRaw: String = VerseFontSize.medium.rawValue
+
+    var verseFontSize: VerseFontSize {
+        VerseFontSize(rawValue: verseFontSizeRaw) ?? .medium
+    }
+
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
@@ -236,7 +242,7 @@ struct VerseOfTheDayView: View {
                 .foregroundColor(.primary)
             
             Text(verse.text)
-                .font(.system(.title3, design: .serif))
+                .font(.system(size: verseFontSize.pointSize, weight: .regular, design: .serif))
                 .foregroundColor(.primary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
@@ -286,6 +292,12 @@ struct VerseOfTheDayView: View {
                 coordinator.showCredits()
             } label: {
                 Label("Sobre & créditos", systemImage: "info.circle")
+            }
+
+            Button {
+                coordinator.go(to: .settings)
+            } label: {
+                Label("Ajustes", systemImage: "gearshape")
             }
 
             Button {

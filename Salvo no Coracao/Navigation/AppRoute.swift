@@ -17,4 +17,5 @@ enum AppRoute: Hashable {
     case credits
     case themes
     case memorized
+    case settings
 }

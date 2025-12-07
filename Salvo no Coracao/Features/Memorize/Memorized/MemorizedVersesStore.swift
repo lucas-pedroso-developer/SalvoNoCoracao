@@ -11,4 +11,5 @@ protocol MemorizedVersesStore {
     func allMemorizedIds() -> [String]
     func unmarkMemorized(id: String)
     func memorizedIDs() -> Set<String>
+    func clearAll()
 }

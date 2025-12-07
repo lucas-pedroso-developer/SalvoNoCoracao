@@ -76,6 +76,14 @@ struct RootView: View {
                                 memorizedStore: memorizedStore
                             )
                         )
+
+                    case .settings:
+                        SettingsView(
+                            viewModel: SettingsViewModel(
+                                memorizedStore: memorizedStore
+                            )
+                        )
+                        .environmentObject(coordinator)
                     }
                 }
         }

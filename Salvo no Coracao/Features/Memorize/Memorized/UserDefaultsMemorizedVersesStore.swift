@@ -48,4 +48,8 @@ final class UserDefaultsMemorizedVersesStore: MemorizedVersesStore {
     func memorizedIDs() -> Set<String> {
         ids
     }
+    
+    func clearAll() {
+        ids = []
+    }
 }
