@@ -122,11 +122,30 @@ struct ThemeDetailView: View {
                             Text(verse.reference)
                                 .font(.headline)
                                 .foregroundColor(.blue)
-
+                            
                             Text(verse.text)
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                                 .multilineTextAlignment(.leading)
+                            
+                            HStack {
+                                Spacer()
+                                
+                                ShareLink(item: shareText(for: verse)) {
+                                    HStack(spacing: 4) {
+                                        Image(systemName: "square.and.arrow.up")
+                                            .font(.caption)
+                                        
+                                        Text("Compartilhar")
+                                            .font(.caption.weight(.semibold))
+                                    }
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 6)
+                                    .background(Color(.systemGray6))
+                                    .cornerRadius(12)
+                                }
+                            }
+                            .padding(.top, 4)
                         }
                         .padding(16)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -153,6 +172,16 @@ struct ThemeDetailView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden()
+    }
+
+    private func shareText(for verse: ThemeVerse) -> String {
+        """
+        \(verse.reference)
+
+        \(verse.text)
+
+        — Enviado pelo app Salvo no Coração
+        """
     }
 }
 

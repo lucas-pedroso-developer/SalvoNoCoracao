@@ -14,6 +14,7 @@ import StoreKit
 final class VerseOfTheDayViewModel: ObservableObject {
     @Published private(set) var currentVerse: Verse?
     @Published private(set) var isFavorite: Bool = false
+    @Published private(set) var state: VerseOfTheDayState = .idle   // 👈 NOVO
 
     private let repository: VerseRepository
     private let favoritesStore: FavoritesStore
@@ -27,17 +28,29 @@ final class VerseOfTheDayViewModel: ObservableObject {
     }
 
     func load() {
+        state = .loading
+
         do {
             allVerses = try repository.loadVerses()
             favoriteIDs = favoritesStore.loadFavoriteIDs()
             selectVerseOfTheDay()
         } catch {
             print("Erro ao carregar versículos: \(error)")
+            currentVerse = nil
+            isFavorite = false
+            state = .error(
+                "Não foi possível carregar o versículo agora. Tente novamente mais tarde."
+            )
         }
     }
 
     private func selectVerseOfTheDay() {
-        guard !allVerses.isEmpty else { return }
+        guard !allVerses.isEmpty else {
+            currentVerse = nil
+            isFavorite = false
+            state = .error("Nenhum versículo disponível.")
+            return
+        }
 
         let dayOfYear = Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 1
         let index = (dayOfYear - 1) % allVerses.count
@@ -45,12 +58,22 @@ final class VerseOfTheDayViewModel: ObservableObject {
 
         currentVerse = verse
         isFavorite = favoriteIDs.contains(verse.id)
+        state = .loaded(verse)
     }
 
     func refreshRandom() {
-        guard !allVerses.isEmpty else { return }
+        guard !allVerses.isEmpty else {
+            currentVerse = nil
+            isFavorite = false
+            state = .error("Nenhum versículo disponível.")
+            return
+        }
+
         guard allVerses.count > 1 else {
             currentVerse = allVerses.first
+            guard let current = currentVerse else { return }
+            isFavorite = currentVerse.map { favoriteIDs.contains($0.id) } ?? false
+            state = .loaded(current)
             return
         }
 
@@ -61,6 +84,8 @@ final class VerseOfTheDayViewModel: ObservableObject {
 
         currentVerse = newVerse
         isFavorite = favoriteIDs.contains(newVerse.id)
+        guard let current = currentVerse else { return }
+        state = .loaded(current)
     }
 
     func toggleFavorite() {
@@ -102,5 +127,4 @@ final class VerseOfTheDayViewModel: ObservableObject {
             }
         }
     }
-
 }

@@ -17,26 +17,9 @@ struct VerseOfTheDayView: View {
             VStack(spacing: 24) {
                 subtitleView()
                     .padding(.top, 24)
-                
-                if let verse = viewModel.currentVerse {
-                    ZStack(alignment: .topLeading) {
-                        RoundedRectangle(cornerRadius: 28)
-                            .fill(.ultraThinMaterial)
-                            .shadow(
-                                color: .black.opacity(0.08),
-                                radius: 16,
-                                x: 0,
-                                y: 8
-                            )
-                        
-                        card(verse: verse)
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.top, 4)
-                    
-                    memorizedBadge(for: verse)
-                }
-                
+
+                contentByState()
+
                 refreshButton()
                 Spacer().frame(height: 32)
             }
@@ -59,12 +42,73 @@ struct VerseOfTheDayView: View {
             }
         }
         .onAppear {
-            viewModel.load()
+            if case .idle = viewModel.state {
+                viewModel.load()
+            }
         }
     }
-    
-    // MARK: - Subviews
-    
+
+    // MARK: - State → UI
+
+    @ViewBuilder
+    private func contentByState() -> some View {
+        switch viewModel.state {
+        case .idle, .loading:
+            loadingView
+
+        case .loaded(let verse):
+            VStack(spacing: 8) {
+                verseCard(verse)
+                memorizedBadge(for: verse)
+            }
+
+        case .error(let message):
+            errorView(message: message)
+        }
+    }
+
+    private var loadingView: some View {
+        VStack(spacing: 16) {
+            ProgressView()
+            Text("Carregando versículo...")
+                .font(.callout.weight(.medium))
+                .foregroundColor(.gray.opacity(0.8))
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 40)
+    }
+
+    private func errorView(message: String) -> some View {
+        VStack(spacing: 16) {
+            Text("Ops…")
+                .font(.headline)
+
+            Text(message)
+                .font(.callout)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.secondary)
+
+            Button {
+                viewModel.load()
+            } label: {
+                HStack(spacing: 8) {
+                    Image(systemName: "arrow.clockwise")
+                    Text("Tentar novamente")
+                        .fontWeight(.semibold)
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
+                .background(Color.blue.opacity(0.1))
+                .clipShape(Capsule())
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, 32)
+        .padding(.top, 40)
+    }
+
+    // MARK: - Subviews existentes
+
     fileprivate func subtitleView() -> some View {
         Text("VERSÍCULO DO DIA")
             .font(.footnote.weight(.semibold))
@@ -88,6 +132,23 @@ struct VerseOfTheDayView: View {
         }
         .accessibilityLabel("Trocar versículo do dia")
         .accessibilityHint("Escolhe outro versículo aleatório para hoje.")
+    }
+
+    private func verseCard(_ verse: Verse) -> some View {
+        ZStack(alignment: .topLeading) {
+            RoundedRectangle(cornerRadius: 28)
+                .fill(.ultraThinMaterial)
+                .shadow(
+                    color: .black.opacity(0.08),
+                    radius: 16,
+                    x: 0,
+                    y: 8
+                )
+            
+            card(verse: verse)
+        }
+        .padding(.horizontal, 20)
+        .padding(.top, 4)
     }
     
     fileprivate func card(verse: Verse) -> some View {
@@ -224,7 +285,6 @@ struct VerseOfTheDayView: View {
                 .padding(4)
         }
     }
-
 }
 
 #Preview {
@@ -238,8 +298,11 @@ struct VerseOfTheDayView: View {
     let coordinator = AppCoordinator()
     
     return NavigationStack {
-        VerseOfTheDayView(viewModel: viewModel, memorizedStore: UserDefaultsMemorizedVersesStore())
-            .environmentObject(coordinator)
+        VerseOfTheDayView(
+            viewModel: viewModel,
+            memorizedStore: UserDefaultsMemorizedVersesStore()
+        )
+        .environmentObject(coordinator)
     }
     .preferredColorScheme(.dark)
 }
