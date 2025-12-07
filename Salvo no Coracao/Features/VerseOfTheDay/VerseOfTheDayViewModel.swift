@@ -112,6 +112,7 @@ final class VerseOfTheDayViewModel: ObservableObject {
         if let current = currentVerse {
             storeVerseForToday(current)
             state = .loaded(current)
+            Haptics.lightImpact()
         }
     }
 
@@ -122,9 +123,11 @@ final class VerseOfTheDayViewModel: ObservableObject {
         if favoriteIDs.contains(verse.id) {
             favoriteIDs.remove(verse.id)
             isFavorite = false
+            Haptics.lightImpact()
         } else {
             favoriteIDs.insert(verse.id)
             isFavorite = true
+            Haptics.success()
             requestReviewIfAppropriate()
         }
 

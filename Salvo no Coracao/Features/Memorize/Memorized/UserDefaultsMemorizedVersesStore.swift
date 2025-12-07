@@ -32,6 +32,7 @@ final class UserDefaultsMemorizedVersesStore: MemorizedVersesStore {
             current.remove(id)
         }
         ids = current
+        Haptics.success()
     }
 
     func unmarkMemorized(id: String) {

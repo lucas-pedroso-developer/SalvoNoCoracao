@@ -146,12 +146,18 @@ struct VerseOfTheDayView: View {
                     x: 0,
                     y: 8
                 )
-            
+
             card(verse: verse)
         }
         .padding(.horizontal, 20)
         .padding(.top, 4)
+        .transition(.asymmetric(
+            insertion: .scale.combined(with: .opacity),
+            removal: .opacity
+        ))
+        .animation(.spring(response: 0.35, dampingFraction: 0.8), value: viewModel.currentVerse?.id)
     }
+
     
     fileprivate func card(verse: Verse) -> some View {
         VStack(spacing: 20) {
@@ -165,6 +171,7 @@ struct VerseOfTheDayView: View {
     fileprivate func buttons(verse: Verse) -> some View {
         HStack(spacing: 16) {
             Button(action: {
+                Haptics.mediumImpact()
                 coordinator.showMemorize(for: verse)
             }) {
                 Text("Memorizar")
