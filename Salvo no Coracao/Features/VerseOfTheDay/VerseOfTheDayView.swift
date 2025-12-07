@@ -18,6 +18,8 @@ struct VerseOfTheDayView: View {
                 subtitleView()
                     .padding(.top, 24)
 
+                progressView()
+
                 contentByState()
 
                 refreshButton()
@@ -290,6 +292,45 @@ struct VerseOfTheDayView: View {
                 .padding(4)
         }
     }
+    
+    private func progressView() -> some View {
+        let total = viewModel.totalVersesCount
+        let memorized = viewModel.totalMemorizedCount(using: memorizedStore)
+
+        guard total > 0 else { return AnyView(EmptyView()) }
+
+        let progress = Double(memorized) / Double(total)
+
+        return AnyView(
+            VStack(alignment: .leading, spacing: 6) {
+                HStack {
+                    Text("Progresso de memorização")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundColor(.primary)
+
+                    Spacer()
+
+                    Text("\(memorized) de \(total)")
+                        .font(.footnote)
+                        .foregroundColor(.secondary)
+                }
+
+                GeometryReader { geometry in
+                    ZStack(alignment: .leading) {
+                        RoundedRectangle(cornerRadius: 999)
+                            .fill(Color.gray.opacity(0.2))
+
+                        RoundedRectangle(cornerRadius: 999)
+                            .fill(Color.blue.opacity(0.9))
+                            .frame(width: geometry.size.width * CGFloat(progress))
+                    }
+                }
+                .frame(height: 8)
+            }
+            .padding(.horizontal, 20)
+        )
+    }
+
 }
 
 #Preview {

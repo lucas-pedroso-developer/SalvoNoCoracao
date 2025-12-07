@@ -22,6 +22,14 @@ final class VerseOfTheDayViewModel: ObservableObject {
     private var allVerses: [Verse] = []
     private var favoriteIDs: Set<String> = []
 
+    var totalVersesCount: Int {
+        allVerses.count
+    }
+
+    var totalFavoritesCount: Int {
+        favoriteIDs.count
+    }
+
     init(repository: VerseRepository, favoritesStore: FavoritesStore) {
         self.repository = repository
         self.favoritesStore = favoritesStore
@@ -180,5 +188,10 @@ final class VerseOfTheDayViewModel: ObservableObject {
         allVerses
             .filter { ids.contains($0.id) }
             .sorted { $0.book < $1.book }
+    }
+
+    func totalMemorizedCount(using memorizedStore: MemorizedVersesStore) -> Int {
+        let ids = memorizedStore.memorizedIDs()
+        return allVerses.filter { ids.contains($0.id) }.count
     }
 }
