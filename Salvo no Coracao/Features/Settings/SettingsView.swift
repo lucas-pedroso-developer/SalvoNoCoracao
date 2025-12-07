@@ -53,5 +53,6 @@ struct SettingsView: View {
             }
         }
         .navigationBarBackButtonHidden()
+        .background(Color(.systemBackground))
     }
 }

@@ -34,6 +34,7 @@ struct VerseOfTheDayView: View {
         }
         .navigationTitle("Salvo no Coração")
         .navigationBarTitleDisplayMode(.inline)
+        .background(Color(.systemBackground))
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 mainMenu
@@ -120,7 +121,7 @@ struct VerseOfTheDayView: View {
     fileprivate func subtitleView() -> some View {
         Text("VERSÍCULO DO DIA")
             .font(.footnote.weight(.semibold))
-            .foregroundColor(.gray.opacity(0.8))
+            .foregroundColor(.secondary)
             .tracking(1)
     }
     
@@ -135,7 +136,7 @@ struct VerseOfTheDayView: View {
                 Text("Trocar versículo")
                     .font(.body)
             }
-            .foregroundColor(.gray)
+            .foregroundColor(.secondary)
             .padding(.top, 4)
         }
         .accessibilityLabel("Trocar versículo do dia")
@@ -205,7 +206,7 @@ struct VerseOfTheDayView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 12)
                 .padding(.horizontal, 12)
-                .background(Color.gray.opacity(0.15))
+                .background(Color(.tertiarySystemFill))
                 .foregroundColor(.blue)
                 .font(.body.weight(.semibold))
                 .lineLimit(1)

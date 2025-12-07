@@ -15,7 +15,7 @@ struct FavoritesView: View {
 
     var body: some View {
         ZStack {
-            Color(uiColor: .systemGray6)
+            Color(.systemBackground)
                 .ignoresSafeArea()
 
             VStack(alignment: .leading, spacing: 16) {
