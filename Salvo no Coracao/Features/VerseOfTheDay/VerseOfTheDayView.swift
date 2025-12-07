@@ -279,6 +279,11 @@ struct VerseOfTheDayView: View {
                 Label("Sobre & créditos", systemImage: "info.circle")
             }
 
+            Button {
+                coordinator.showMemorized()
+            } label: {
+                Label("Versículos memorizados", systemImage: "checkmark.seal")
+            }
         } label: {
             Image(systemName: "line.3.horizontal")
                 .font(.headline)

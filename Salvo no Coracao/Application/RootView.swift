@@ -66,6 +66,14 @@ struct RootView: View {
                     case .themes:
                            ThemesView()
                                .environmentObject(coordinator)
+
+                    case .memorized:
+                        MemorizedListView(
+                            viewModel: MemorizedListViewModel(
+                                verseOfTheDayViewModel: verseViewModel,
+                                memorizedStore: UserDefaultsMemorizedVersesStore()
+                            )
+                        )
                     }
                 }
         }

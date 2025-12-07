@@ -28,8 +28,8 @@ final class FavoritesViewModel: ObservableObject {
     }
     
     func removeFavorite(_ verse: Verse) {
-        favorites.removeAll { $0.id == verse.id }
         verseOfTheDayViewModel.removeFavorite(verse)
+        reload()
     }
 
     func isMemorized(_ verse: Verse) -> Bool {

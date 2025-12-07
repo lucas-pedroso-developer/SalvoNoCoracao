@@ -16,7 +16,7 @@ final class AppCoordinator: ObservableObject {
         switch route {
         case .home:
             popToRoot()
-        case .favorites, .memorize, .credits, .themes:
+        case .favorites, .memorize, .credits, .themes, .memorized:
             path.append(route)
         }
     }
@@ -36,6 +36,10 @@ final class AppCoordinator: ObservableObject {
     func showMemorize(for verse: Verse) {
         memorizingVerse = verse
         go(to: .memorize)
+    }
+    
+    func showMemorized() {
+        go(to: .memorized)
     }
     
     func pop() {

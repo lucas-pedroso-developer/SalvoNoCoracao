@@ -9,4 +9,6 @@ protocol MemorizedVersesStore {
     func isMemorized(id: String) -> Bool
     func setMemorized(_ memorized: Bool, for id: String)
     func allMemorizedIds() -> [String]
+    func unmarkMemorized(id: String)
+    func memorizedIDs() -> Set<String>
 }

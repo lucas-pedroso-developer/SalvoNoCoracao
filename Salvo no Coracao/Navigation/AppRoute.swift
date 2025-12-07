@@ -15,5 +15,6 @@ enum AppRoute: Hashable {
     case favorites
     case memorize
     case credits
-    case themes 
+    case themes
+    case memorized
 }

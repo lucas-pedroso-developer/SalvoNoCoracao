@@ -176,4 +176,9 @@ final class VerseOfTheDayViewModel: ObservableObject {
         defaults.set(Date(), forKey: StorageKeys.lastVerseDate)
     }
 
+    func verses(withIDs ids: Set<String>) -> [Verse] {
+        allVerses
+            .filter { ids.contains($0.id) }
+            .sorted { $0.book < $1.book }
+    }
 }

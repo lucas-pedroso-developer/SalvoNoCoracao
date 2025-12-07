@@ -8,6 +8,7 @@
 import Foundation
 
 final class UserDefaultsMemorizedVersesStore: MemorizedVersesStore {
+
     private let key = "memorizedVerseIds"
 
     private var ids: Set<String> {
@@ -33,7 +34,17 @@ final class UserDefaultsMemorizedVersesStore: MemorizedVersesStore {
         ids = current
     }
 
+    func unmarkMemorized(id: String) {
+        var stored = ids
+        stored.remove(id)
+        ids = stored
+    }
+
     func allMemorizedIds() -> [String] {
         Array(ids)
+    }
+
+    func memorizedIDs() -> Set<String> {
+        ids
     }
 }
