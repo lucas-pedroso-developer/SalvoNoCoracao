@@ -22,12 +22,18 @@ struct SalvoNoCoracaoApp: App {
         // SegmentedControl azul (iOS 16)
         UISegmentedControl.applyBlueTint()
     }
-    
+
     var body: some Scene {
         WindowGroup {
-            RootView()
+            AppRootView()              // 👈 aqui em vez de RootView()
                 .environmentObject(coordinator)
-                .tint(.blue)
         }
     }
+//    var body: some Scene {
+//        WindowGroup {
+//            RootView()
+//                .environmentObject(coordinator)
+//                .tint(.blue)
+//        }
+//    }
 }

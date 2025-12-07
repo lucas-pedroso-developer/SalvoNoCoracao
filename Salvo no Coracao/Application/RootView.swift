@@ -73,7 +73,7 @@ struct RootView: View {
                         MemorizedListView(
                             viewModel: MemorizedListViewModel(
                                 verseOfTheDayViewModel: verseViewModel,
-                                memorizedStore: UserDefaultsMemorizedVersesStore()
+                                memorizedStore: memorizedStore
                             )
                         )
                     }
